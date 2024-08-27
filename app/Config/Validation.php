@@ -50,7 +50,7 @@ class Validation extends BaseConfig
         'cep' => 'required|exact_length[8]',
         'address_number' => 'required|max_length[10]',
         'extra' => 'permit_empty|max_length[255]',
-        'photo' => 'uploaded[photo]|max_size[photo,1024]|is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/png]',
+        'photo' => 'max_size[photo,1024]|is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/png]',
     ];
 
     // Mensagens de erro personalizadas students
