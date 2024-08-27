@@ -145,16 +145,17 @@ Possui uma collection do Postman com os endpoints da aplicação, que pode ser i
 
 
 ## Relatorio 
-Atualmente tenho bastante contato com o ‘framework’ PHP Symfony e dentro dele possuo diversas ferramentas para trabalhar com dados, autenticação, rotas, etc. Sendo assim, 
-escolhi utilizar o maximo de recursos do CodeIgniter 4, como as migrações, seeds, rotas, shield, filters visando o aprendizado e a prática do ‘framework’. De forma que, grande parte do desenvolvimento foi estudo
-e 'prática' do ‘framework’, para que eu pudesse entender o seu funcionamento e como utilizar os recursos disponíveis. 
-Decidi optar por uma abordagem JWT e, comecei desenvolvendo do zero a autenticação JWT, porém, percebi que o CodeIgniter 4 possui um pacote chamado Shield que facilita a autenticação JWT, então decidi utilizar o Shield para autenticação.
-Portanto, troquei a abordagem que utilizava para adaptar ao Shield, mesmo assim, decidi deixar o código que desenvolvia para autenticação JWT, demonstrando o processo de desenvolvimento.
+Atualmente, tenho bastante contato com o framework PHP Symfony, no qual utilizo diversas ferramentas para 
+trabalhar com dados, autenticação, rotas, etc. Com isso, escolhi explorar ao máximo os recursos do CodeIgniter 4, como migrações, seeds, rotas, Shield, filtros, visando o aprendizado e a prática do framework. Grande parte do desenvolvimento foi dedicada ao estudo e à prática, para entender o funcionamento do framework e como utilizar os recursos disponíveis.
 
-De melhorias futuras, eu faria a implementação de testes unitários e testes de integração para garantir a qualidade do código e a segurança da aplicação, além de alterar a forma de armazenamento 
-de imagens como base64 para um diretório no servidor, como o S3 da AWS, por exemplo. E também, a implementação de um sistema de envio de e-mails para confirmação de cadastro e recuperação de senha.
-Deixei o CORS da aplicação aberto para qualquer origem, porém, em um ambiente de produção, seria necessário configurar o CORS para aceitar apenas origens específicas junto ao CorsFilter criado.
+Optei por uma abordagem JWT e comecei desenvolvendo a autenticação JWT do zero. No entanto,
+percebi que o CodeIgniter 4 possui um pacote chamado Shield, que facilita a implementação de autenticação JWT. Por isso, decidi utilizar o Shield para autenticação, mas mantive o código da autenticação JWT que estava desenvolvendo, para demonstrar o processo de desenvolvimento.
 
+Quanto a melhorias futuras, implementaria testes unitários e de integração para garantir a qualidade do código 
+e a segurança da aplicação. Além disso, mudaria o armazenamento de imagens em base64 para um diretório no servidor, como o S3 da AWS, 
+por exemplo. Ademais, também implementaria um sistema de envio de e-mails para a confirmação de cadastro e
+recuperação de senha. (Ficou meio jogada essa parte) Deixei o CORS da aplicação aberto para qualquer origem, mas,
+em um ambiente de produção, seria necessário configurar o CORS para aceitar apenas origens específicas, junto ao CorsFilter criado.
 
 ## Server Requirements do Code Igniter
 Acho imporante deixar esta informação aqui, pois é importante para o funcionamento da aplicação e debug de possíveis problemas.
