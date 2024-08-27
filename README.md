@@ -1,56 +1,165 @@
-# CodeIgniter 4 Application Starter
+# CRUD Api For Students With CodeIgniter 4 
 
-## What is CodeIgniter?
+## Como funciona a aplicação:
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+A aplicação foi desenvolvida utilizando a tecnologia PHP com o framework CodeIgniter 4. O objetivo é criar um CRUD de alunos, onde é possível cadastrar, listar, editar e excluir alunos.
+Utilizando também o banco de dados MySQL para armazenar as informações dos alunos e a biblioteca JWT junto ao Shield do CodeIgniter para autenticação.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Instalação do projeto
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Para instalar a aplicação, basta clonar o repositório e rodar o comando `composer install` para instalar as dependências do projeto.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+É necessário PHP 8.1 ou superior e as extensões `intl` e `mbstring` instaladas.
 
-## Installation & updates
+Para baixar usa-se `git clone https://github.com/Antoniosrt/CrudStudentsWithCodeIgniter` entre no diretorio e rode o comando `composer install`.
+Após isso, temos que instanciar o banco de dados, para isso precisa-se de um banco de dados MySql.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+Para rodar a aplicação, é necessário configurar o arquivo `.env` com as informações do banco de dados e o JWT.
+Pode-se copiar o arquivo `env` e renomear para `.env` e configurar as informações do banco de dados e JWT.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+A chave JWT pode ser gerada com o comando `php -r 'echo base64_encode(random_bytes(32));'` conforme com a documentação do Shield - CodeIgniter 4.
+https://shield.codeigniter.com/addons/jwt/
 
-## Setup
+## Configuração do Ambiente
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+A aplicação requer que certas variáveis de ambiente sejam definidas para funcionar corretamente. Essas variáveis são definidas no arquivo `.env` na raiz do seu projeto. Abaixo está uma breve explicação de cada uma:
 
-## Important Change with index.php
+- `CI_ENVIRONMENT`: Esta variável define o ambiente em que sua aplicação está rodando. Pode ser `development` ou `production`. No ambiente `development`, mensagens de erro mais detalhadas serão exibidas.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- `database.default.hostname`: Este é o nome do host do seu servidor de banco de dados. Geralmente é `localhost` para desenvolvimento local.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+- `database.default.database`: Este é o nome do seu banco de dados. Você deve criar um banco de dados no seu servidor MySQL e definir esta variável para o seu nome.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+- `database.default.username`: Este é o nome de usuário usado para conectar ao seu banco de dados.
 
-## Repository Management
+- `database.default.password`: Esta é a senha usada para conectar ao seu banco de dados.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+- `database.default.DBDriver`: Este é o driver de banco de dados usado para conectar ao seu banco de dados. Para bancos de dados MySQL, deve ser definido como `MySQLi`.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+- `database.default.DBPrefix`: Este é um prefixo opcional que será adicionado a todas as suas tabelas de banco de dados. Se você não quiser usar um prefixo, pode deixá-lo como uma string vazia.
 
-## Server Requirements
+- `database.default.port`: Este é o número da porta usado para conectar ao seu servidor de banco de dados. A porta padrão do MySQL é `3306`.
 
-PHP version 7.4 or higher is required, with the following extensions installed:
+- `authjwt.keys.default.0.secret`: Esta é a chave secreta usada para assinar os tokens JWT para autenticação do usuário. Deve ser uma string longa e aleatória. Você pode gerar uma usando o comando `php -r 'echo base64_encode(random_bytes(32));'`.
+
+Por favor, certifique-se de preencher esses detalhes de acordo com a sua configuração antes de executar a aplicação.
+
+## Migrações
+Para criar as tabelas no banco de dados, é necessário rodar as migrações. Para isso, basta rodar o comando `php spark migrate` na raiz do projeto.
+E também para ativar as configurações de autenticação do Shield, é necessário rodar o comando `php spark migrate --all` para criar as tabelas necessárias.
+
+Caso deseje reverter as migrações, basta rodar o comando `php spark migrate:rollback` para reverter a última migração.
+
+## Seeds
+Para popular o banco de dados com dados iniciais, é necessário rodar as seeds. Para isso, basta rodar o comando `php spark db:seed StudentsSeeder` na raiz do projeto.
+
+## Rodando a aplicação
+Para rodar a aplicação, basta rodar o comando `php spark serve` na raiz do projeto. Isso irá iniciar um servidor de desenvolvimento em `http://localhost:8080`.
+
+## API Endpoints
+A aplicação possui os seguintes endpoints:
+Autenticação:
+### - POST - /auth/login - Autentica o usuário e retorna o token JWT
+**Body:**
+```json
+{
+    "email": "",
+    "password": ""
+}
+```
+#### - POST - /auth/register - Registra um novo usuário
+**Body:**
+```json
+{
+    "name": "",
+    "email": "",
+    "password": ""
+}
+```
+
+### Students - Rotas protegidas por autenticação JWT utilizado no cabeçalho Authorization Bearer:
+**Headers:**
+```json
+{
+    "Authorization": "Bearer {token}"
+}
+```
+
+#### - GET - /students - Lista todos os alunos (possui paginação com parâmetros page e per_page)
+**Query Params:**
+```json
+{
+    "page": 1,
+    "per_page": 10
+}
+```
+*
+
+#### - GET - /students/{id} - Lista um aluno específico
+**Params:**
+```json
+{
+    "id": 1
+}
+```
+#### - POST - /students - Cadastra um aluno
+**Campos Body form-data:**
+* fullName
+* cpf
+* email
+* phone
+* address_number
+* street
+* city
+* state
+* extra - opcional
+* photo - Arquivo
+#### - POST - /students/{id} - Atualiza um aluno específico
+**Params:**
+```json
+{
+    "id": 1
+}
+```
+**Campos Body form-data:**
+* fullName
+* cpf
+* email
+* phone
+* address_number
+* street
+* city
+* state
+* extra - opcional
+* photo - Arquivo opcional
+
+#### - DELETE - /students/{id} - Deleta um aluno específico
+**Params:**
+```json
+{
+    "id": 1
+}
+```
+
+Possui uma collection do Postman com os endpoints da aplicação, que pode ser importada para o Postman e testar a aplicação dentro da pasta principal.
+
+
+## Relatorio 
+Atualmente tenho bastante contato com o ‘framework’ PHP Symfony e dentro dele possuo diversas ferramentas para trabalhar com dados, autenticação, rotas, etc. Sendo assim, 
+escolhi utilizar o maximo de recursos do CodeIgniter 4, como as migrações, seeds, rotas, shield, filters visando o aprendizado e a prática do ‘framework’. De forma que, grande parte do desenvolvimento foi estudo
+e 'prática' do ‘framework’, para que eu pudesse entender o seu funcionamento e como utilizar os recursos disponíveis. 
+Decidi optar por uma abordagem JWT e, comecei desenvolvendo do zero a autenticação JWT, porém, percebi que o CodeIgniter 4 possui um pacote chamado Shield que facilita a autenticação JWT, então decidi utilizar o Shield para autenticação.
+Portanto, troquei a abordagem que utilizava para adaptar ao Shield, mesmo assim, decidi deixar o código que desenvolvia para autenticação JWT, demonstrando o processo de desenvolvimento.
+
+De melhorias futuras, eu faria a implementação de testes unitários e testes de integração para garantir a qualidade do código e a segurança da aplicação, além de alterar a forma de armazenamento 
+de imagens como base64 para um diretório no servidor, como o S3 da AWS, por exemplo. E também, a implementação de um sistema de envio de e-mails para confirmação de cadastro e recuperação de senha.
+Deixei o CORS da aplicação aberto para qualquer origem, porém, em um ambiente de produção, seria necessário configurar o CORS para aceitar apenas origens específicas junto ao CorsFilter criado.
+
+
+## Server Requirements do Code Igniter
+Acho imporante deixar esta informação aqui, pois é importante para o funcionamento da aplicação e debug de possíveis problemas.
+
+PHP version 8.1 or higher is required, with the following extensions installed:
 
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)

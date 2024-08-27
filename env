@@ -1,0 +1,9 @@
+CI_ENVIRONMENT=
+database.default.hostname =
+database.default.database =
+database.default.username =
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.DBPrefix = ''
+database.default.port = 3306
+authjwt.keys.default.0.secret =

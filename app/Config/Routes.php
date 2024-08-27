@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-
+$routes->post('/auth/register','RegisterController::register');
 $routes->post('/auth/login','LoginController::jwtLogin');
 //$routes->get('/api/v1/user','UserApiController::index');
 $routes->post('/api/students', 'StudentController::create');
