@@ -42,7 +42,7 @@ class Validation extends BaseConfig
     public $student = [
         'fullName' => 'required|min_length[3]|max_length[100]',
         'email' => 'required|valid_email|max_length[100]',
-        'cpf' => 'required|exact_length[11]|is_unique[student.cpf]',
+        'cpf' => 'required|exact_length[11]|is_unique[student.cpf,id,{id}]',
         'phone' => 'required|min_length[10]|max_length[15]',
         'street' => 'required|max_length[255]',
         'city' => 'required|max_length[100]',
@@ -81,6 +81,26 @@ class Validation extends BaseConfig
             'is_image' => 'O arquivo deve ser uma imagem.',
             'mime_in' => 'A imagem deve estar no formato jpg, jpeg ou png.',
         ],
+        'street' => [
+            'required' => 'O campo rua é obrigatório.',
+            'max_length' => 'A rua deve ter no máximo 255 caracteres.',
+        ],
+        'city' => [
+            'required' => 'O campo cidade é obrigatório.',
+            'max_length' => 'A cidade deve ter no máximo 100 caracteres.',
+        ],
+        'state' => [
+            'required' => 'O campo estado é obrigatório.',
+            'exact_length' => 'O estado deve ter exatamente 2 caracteres.',
+        ],
+        'cep' => [
+            'required' => 'O campo CEP é obrigatório.',
+            'exact_length' => 'O CEP deve ter exatamente 8 dígitos.',
+        ],
+        'address_number' => [
+            'required' => 'O número é obrigatório.',
+            'max_length' => 'O número deve ter no máximo 10 caracteres.',
+        ]
     ];
 
     // --------------------------------------------------------------------

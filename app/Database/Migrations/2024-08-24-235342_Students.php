@@ -58,8 +58,7 @@ class Students extends Migration
                     'null'=>true
                 ],
                 'photo'=>[
-                    'type' => 'VARCHAR',
-                    'constraint'=>'255'
+                    'type' => 'TEXT'
                 ],
                 'created_at' => [
                     'type' => 'TIMESTAMP',

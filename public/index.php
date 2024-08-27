@@ -1,11 +1,19 @@
 <?php
 
+////remove CORS
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers:Content-Type, Content-Length, Accept-Encoding,Authorization, form-data, x-www-form-urlencoded');
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == "OPTIONS") {
+    exit(0);
+}
 /*
  *---------------------------------------------------------------
  * CHECK PHP VERSION
  *---------------------------------------------------------------
  */
-
 $minPhpVersion = '8.1'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     $message = sprintf(

@@ -17,6 +17,19 @@ class LoginController extends BaseController
 {
     use ResponseTrait;
 
+
+    public function __construct()
+    {
+
+//        header('Access-Control-Allow-Origin: *');
+//        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+//        header('Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding');
+//        $method = $_SERVER['REQUEST_METHOD'];
+//        if ($method == "OPTIONS") {
+//            exit(0);
+//        }
+    }
+
     /**
      * Authenticate Existing User and Issue JWT.
      */
@@ -57,14 +70,13 @@ class LoginController extends BaseController
 
         /** @var JWTManager $manager */
         $manager = service('jwtmanager');
-
-        // Generate JWT and return to client
-        $jwt = $manager->generateToken($user);
+        $jwt = $manager->generateToken($user, ['iss' => 'teste.com']);
 
         return $this->respond([
-            'access_token' => $jwt,
+            'access_token' => $jwt
         ]);
     }
+
 
     /**
      * Returns the rules that should be used for validation.

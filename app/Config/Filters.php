@@ -24,7 +24,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-    ];
+//        'cors'=> \App\Filters\CorsFilter::class
+   ];
 
     /**
      * List of filter aliases that are always
@@ -37,11 +38,13 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+//            'cors' => ['before' => ['*']],
         ],
         'after' => [
             'toolbar',
             // 'honeypot',
             // 'secureheaders',
+//            'cors' => ['after' => ['*']],
         ],
     ];
 
